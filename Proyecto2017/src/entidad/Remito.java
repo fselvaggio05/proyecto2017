@@ -1,0 +1,22 @@
+package entidad;
+
+import java.util.*;
+
+public class Remito {
+
+	private int nro_remito;
+	private Date fecha_confeccion;
+	public int getNro_remito() {
+		return nro_remito;
+	}
+	public void setNro_remito(int nro_remito) {
+		this.nro_remito = nro_remito;
+	}
+	public Date getFecha_confeccion() {
+		return fecha_confeccion;
+	}
+	public void setFecha_confeccion(Date fecha_confeccion) {
+		this.fecha_confeccion = fecha_confeccion;
+	}
+	
+}
