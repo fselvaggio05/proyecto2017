@@ -10,6 +10,7 @@ public class Persona {
 	private Date fecha_nacimiento;
 	private String sexo;
 	private String email;
+
 	
 	
 	public String getApellido() {
