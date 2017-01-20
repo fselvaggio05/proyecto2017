@@ -1,6 +1,6 @@
 package entidad;
 
-public class Kinesiologo {
+public class Kinesiologo extends Persona {
 private int matricula;
 
 public int getMatricula() {
