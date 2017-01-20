@@ -1,5 +1,6 @@
 package datos;
 
+import entidad.Paciente;
 import entidad.Persona;
 
 public class CatalogoPersonas {
@@ -29,6 +30,22 @@ public class CatalogoPersonas {
 			
 			return rta;
 	}
+
+	public void altaPaciente(Paciente pacient) {
+		// permite el registro de un nuevo paciente
+		
 	}
 	
-}
+	public void actualizarPaciente(Paciente pacient){
+		
+	}
+
+	public void eliminarPersona(int dni) {
+		// permite eliminar cualquier persona por dni
+		
+	}
+	
+
+	}
+	
+

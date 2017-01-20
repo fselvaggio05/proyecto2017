@@ -20,4 +20,11 @@ public class CatalogoTurnos {
 		return null;
 	}
 
+	public void asignarTurno(Turno t) {
+		// registra el turno disponible como Asignado para un paciente
+	    //debe ser un update
+		
+		
+	}
+
 }

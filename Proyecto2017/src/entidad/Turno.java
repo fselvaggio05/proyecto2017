@@ -11,6 +11,8 @@ private int cant_sesiones;
 private Date fecha_baja_t;
 private String Estado;
 private Date fecha_generacion;
+private Paciente Paciente;
+private Kinesiologo Kinesiologo;
 
 
 public Date getFecha_alta_t() {
@@ -55,6 +57,12 @@ public Date getFecha_generacion() {
 public void setFecha_generacion(Date fecha_generacion) {
 	this.fecha_generacion = fecha_generacion;
 }
-
-
+public void setPaciente(Paciente pacient) {
+	//la clase turno contiene un paciente
+	this.Paciente=pacient;
+	
+}
+public void setKinesiologo(Kinesiologo kinesio)
+{this.Kinesiologo=kinesio;
+	}
 }
