@@ -10,6 +10,7 @@ public class Persona {
 	private Date fecha_nacimiento;
 	private String sexo;
 	private String email;
+	private String clave;
 
 	
 	
@@ -49,7 +50,15 @@ public class Persona {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getClave() {
+		
+		return clave;
+	}
 
+	public void setClave (String clave)
+	{
+		this.clave=clave;
+	}
 	}
 	
-}
+
