@@ -55,8 +55,8 @@ private void altaPaciente() {
 	
 }
 
-private void actualizarPaciente(){
-	
+private void actualizarPaciente(Paciente p){
+	cpersonas.actualizarPaciente(p);
 }
 
 private void eliminarPersona(int dni){

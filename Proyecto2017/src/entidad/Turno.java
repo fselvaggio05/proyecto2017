@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Turno {
 private Date fecha_alta_t;
-private Time hoa_alta_t;
+private Time hora_alta_t;
 private String observacion;
 private int cant_sesiones;
 private Date fecha_baja_t;
@@ -13,6 +13,9 @@ private String Estado;
 private Date fecha_generacion;
 private Paciente Paciente;
 private Kinesiologo Kinesiologo;
+public java.sql.Date getFecha_generacion;
+
+
 
 
 public Date getFecha_alta_t() {
@@ -21,11 +24,11 @@ public Date getFecha_alta_t() {
 public void setFecha_alta_t(Date fecha_alta_t) {
 	this.fecha_alta_t = fecha_alta_t;
 }
-public Time getHoa_alta_t() {
-	return hoa_alta_t;
+public Time getHora_alta_t() {
+	return hora_alta_t;
 }
-public void setHoa_alta_t(Time hoa_alta_t) {
-	this.hoa_alta_t = hoa_alta_t;
+public void setHora_alta_t(Time hoa_alta_t) {
+	this.hora_alta_t = hoa_alta_t;
 }
 public String getObservacion() {
 	return observacion;
@@ -62,7 +65,15 @@ public void setPaciente(Paciente pacient) {
 	this.Paciente=pacient;
 	
 }
-public void setKinesiologo(Kinesiologo kinesio)
-{this.Kinesiologo=kinesio;
+public void setKinesiologo(Kinesiologo Kinesiologo)
+{this.Kinesiologo=Kinesiologo;
 	}
+public Kinesiologo getKinesiologo(){
+	return Kinesiologo;
+}
+public Paciente getPaciente() {
+	
+	return Paciente;
+}
+
 }

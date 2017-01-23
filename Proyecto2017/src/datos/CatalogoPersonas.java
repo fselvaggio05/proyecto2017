@@ -217,8 +217,8 @@ public class CatalogoPersonas {
 		
 		
 		try {
-			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"Update persona set  nro_afiliado_os=? where dni=?");
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement
+					("Update persona set  nro_afiliado_os=? where dni=?");
 			
 	
 			stmt.setInt(1, pacient.getNro_afiliado_os());
