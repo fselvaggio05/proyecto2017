@@ -86,7 +86,7 @@ public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte,
 	int dia_generado=getDiaDeLaSemana(fecha_generacion);
 	int dia_semana=getNroDia(h.getDia_semana());
 	
-	//convierto todo a long para poder obtener la cantidad de turnos del kinesiologo en ese horario
+	//convierto todo a long para poder obtener la cantidad de turnos del kinesiologo en ese horario por dia
 	
 	long hora_desde= h.getHora_desde().getTime()/(1000*60);
 	long hora_hasta=h.getHora_hasta().getTime()/(1000*60);
@@ -98,7 +98,7 @@ public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte,
 			{		
 			//tiene que haber un for por cada horario
 					
-			Time hora_from= new Time (hora_desde);
+			Time hora_from= new Time (k);
 			
 			Turno t = new Turno();
 			t.setFecha_alta_t(d_a);
