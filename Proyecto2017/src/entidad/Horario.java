@@ -9,6 +9,8 @@ private Date fecha_baja_h;
 private Time hora_desde;
 private Time hora_hasta;
 private String dia_semana;
+private Kinesiologo Kinesiologo;
+
 public Date getFecha_alta_h() {
 	return fecha_alta_h;
 }
@@ -39,5 +41,11 @@ public String getDia_semana() {
 public void setDia_semana(String dia_semana) {
 	this.dia_semana = dia_semana;
 }
+public Kinesiologo getKinesiologo(){
+return this.Kinesiologo;
+}
 
+public void setKinesiologo(Kinesiologo Kinesiologo){
+this.Kinesiologo=Kinesiologo;	
+}
 }
