@@ -12,23 +12,29 @@ import entidad.*;
 
 
 public class ControladorClinica {
-CatalogoPersonas cpersonas = new CatalogoPersonas();
-CatalogoTurnos cturnos= new CatalogoTurnos();
+
+
+
 
 public ArrayList<Turno> buscarTurno (){
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	ArrayList<Turno> turnosDisponibles = new ArrayList <Turno> ();
-turnosDisponibles= cturnos.buscarTurnos("Libre");
+
+	turnosDisponibles= cturnos.buscarTurnos("Libre");
 	return turnosDisponibles;
 }
 
 public Turno seleccionarTurno( Date dia_turno, Time hora_turno){
-Turno t = cturnos.seleccionarTurno(dia_turno, hora_turno);
+	CatalogoTurnos cturnos= new CatalogoTurnos();
+	Turno t = cturnos.seleccionarTurno(dia_turno, hora_turno);
 return t;
 
 }
 
 public void reservarTurno(int dni, String motivo_turno, Turno t){
 //permite reservar un turno
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	String mensaje= "Dni no encontrado";
 	// se castea la variable para que sean del mismo tipo
 	Paciente pacient = (Paciente) cpersonas.buscarPersona(dni);
@@ -53,6 +59,7 @@ public void reservarTurno(int dni, String motivo_turno, Turno t){
 
 private void altaPaciente() {
 	//necesito obtener los datos personales del paciente
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	Paciente pacient = new Paciente();
 	
 	
@@ -61,17 +68,29 @@ private void altaPaciente() {
 }
 
 private void actualizarPaciente(Paciente p){
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	cpersonas.actualizarPaciente(p);
 }
 
 private void eliminarPersona(int dni){
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	cpersonas.eliminarPersona(dni);
+}
+
+public void altaPractica (Practica p){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	cpracticas.altaPractica(p);
+}
+
+public void bajaPactica (int codigo_practica){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	cpracticas.bajaPractica(codigo_practica);
 }
 
 public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte, Time duracion_turno) {
 	//dado un horario para un kinesiologo permite generar todos los turnos Libres 
 	// desde una fecha de generacion dada hasta el ultimo dia del horizonte de planificacion
-	
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	
 	//convierto la fecha de generacion en dia para poder compararla
 	Calendar dia_alta = Calendar.getInstance();
@@ -120,6 +139,7 @@ public static int getDiaDeLaSemana(Date d){
 	return cal.get(Calendar.DAY_OF_WEEK);		
 }
 public static int getNroDia (String dia){
+
 	int nro = 0;
 	switch(dia){
 	case "Domingo": nro= 1;
