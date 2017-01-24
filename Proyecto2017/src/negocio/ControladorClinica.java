@@ -4,6 +4,7 @@ import java.sql.Time;
 
 
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import datos.*;
@@ -70,28 +71,42 @@ private void eliminarPersona(int dni){
 public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte, Time duracion_turno) {
 	//dado un horario para un kinesiologo permite generar todos los turnos Libres 
 	// desde una fecha de generacion dada hasta el ultimo dia del horizonte de planificacion
-	ArrayList<Turno> turnosNuevos = new ArrayList <Turno> ();
 	
+	
+	//convierto la fecha de generacion en dia para poder compararla
 	Calendar dia_alta = Calendar.getInstance();
 	dia_alta.setTime(fecha_generacion); // Configuramos la fecha que se recibe
+	
 	for (int i=0; i<dias_horizonte; i=i+1){
-		
+		//por cada dia del horizonte de planificacion
 		dia_alta.add(Calendar.DAY_OF_YEAR, i); //se le agrega i dias a la fecha
 		Date d_a=dia_alta.getTime(); //devuelve el dia en tipo Date
-		
+	
+		//convierto el dia de generacion de agenda y de la semana del horario para compararlos
 	int dia_generado=getDiaDeLaSemana(fecha_generacion);
 	int dia_semana=getNroDia(h.getDia_semana());
+	
+	//convierto todo a long para poder obtener la cantidad de turnos del kinesiologo en ese horario
+	
+	long hora_desde= h.getHora_desde().getTime()/(1000*60);
+	long hora_hasta=h.getHora_hasta().getTime()/(1000*60);
+	long duracion_t=duracion_turno.getTime()/(1000*60);
+	
+	//comparo si el dia de generacion es = al dia de la semana del horario
 		if(dia_generado == dia_semana){
-			for (Time k=h.getHora_desde(); k< h.getHora_hasta(); k=k+ duracion_turno)
+			for (long k=hora_desde; k< hora_hasta; k=k+ duracion_t)
 			{		
 			//tiene que haber un for por cada horario
+					
+			Time hora_from= new Time (hora_desde);
 			
 			Turno t = new Turno();
 			t.setFecha_alta_t(d_a);
-			t.setHora_alta_t(h.getHora_desde());
+			t.setHora_alta_t(hora_from);
 			t.setEstado("Libre");
 			t.setKinesiologo(h.getKinesiologo());
 			t.setFecha_generacion(fecha_generacion);
+			cturnos.registrarTurno(t);
 			
 		}dia_generado=dia_generado+1;
 		
