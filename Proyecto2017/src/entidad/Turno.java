@@ -15,6 +15,17 @@ private Paciente Paciente;
 private Kinesiologo Kinesiologo;
 public java.sql.Date getFecha_generacion;
 
+private int idTurno;
+
+
+
+public int getIdTurno() {
+	return idTurno;
+}
+public void setIdTurno(int idTurno) {
+	this.idTurno = idTurno;
+}
+
 
 
 

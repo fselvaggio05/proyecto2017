@@ -133,6 +133,47 @@ public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte,
 	}
 }
 
+public void  asignarTurnoaPaciente (int dni, Date fecha_alta_t, Time hora_alta_t){
+	//asigna el paciente a un turno 
+	CatalogoTurnos cturnos = new CatalogoTurnos();
+	Turno t = new Turno();
+	t=cturnos.seleccionarTurno(fecha_alta_t, hora_alta_t);
+	Paciente p = new Paciente();
+	CatalogoPersonas cpacientes = new CatalogoPersonas();
+	p=cpacientes.buscarPaciente(dni);
+	t.setPaciente(p);
+	t.setEstado("Asignado");
+	cturnos.actualizarTurno(t);
+
+}
+	
+public void asignarTurnoaSesion (Date fecha_alta_t, Time hora_alta_t, ArrayList <Sesion> s ){
+	CatalogoTurnos cturnos = new CatalogoTurnos();
+	Turno t = new Turno();
+	t=cturnos.seleccionarTurno(fecha_alta_t, hora_alta_t);
+	for(int i=0; i<s.size(); i=i+1){
+	s.get(i).setTurno(t);
+	}
+
+}
+
+public void asignarPracticaaSesion (String cod_practica, Sesion s){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	Practica p = new Practica();
+	p=cpracticas.buscarPractica(cod_practica);
+	s.setPractica(p);
+	
+}
+
+public void registrarSesion (ArrayList <Sesion> s){
+	//registra las sesiones
+	CatalogoSesiones csesiones = new CatalogoSesiones();
+	for(int i=0; i<s.size(); i=i+1){
+		Sesion sesion = s.get(i);
+	csesiones.registrarSesion(sesion);
+	}
+}
+
 public static int getDiaDeLaSemana(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
 	cal.setTime(d);
@@ -162,6 +203,9 @@ public static int getNroDia (String dia){
 	
 	return nro;
 }
+
+
+
 }
 
 
