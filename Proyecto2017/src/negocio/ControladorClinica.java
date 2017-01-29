@@ -147,13 +147,11 @@ public void  asignarTurnoaPaciente (int dni, Date fecha_alta_t, Time hora_alta_t
 
 }
 	
-public void asignarTurnoaSesion (Date fecha_alta_t, Time hora_alta_t, ArrayList <Sesion> s ){
+public void asignarSesionaTurno (Date fecha_alta_t, Time hora_alta_t, ArrayList <Sesion> s ){
 	CatalogoTurnos cturnos = new CatalogoTurnos();
 	Turno t = new Turno();
 	t=cturnos.seleccionarTurno(fecha_alta_t, hora_alta_t);
-	for(int i=0; i<s.size(); i=i+1){
-	s.get(i).setTurno(t);
-	}
+    t.setSesion(s);
 
 }
 

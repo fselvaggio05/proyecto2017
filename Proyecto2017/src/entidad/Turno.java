@@ -14,7 +14,8 @@ private Date fecha_generacion;
 private Paciente Paciente;
 private Kinesiologo Kinesiologo;
 public java.sql.Date getFecha_generacion;
-
+private ArrayList<Sesion> sesiones= new ArrayList <Sesion>();
+ 
 private int idTurno;
 
 
@@ -86,5 +87,11 @@ public Paciente getPaciente() {
 	
 	return Paciente;
 }
-
+public void setSesion(ArrayList<Sesion> s) {
+	this.sesiones=s;
+	
+}
+public ArrayList <Sesion> getSesion(){
+	return sesiones;
+}
 }
