@@ -155,7 +155,7 @@ public void asignarSesionaTurno (Date fecha_alta_t, Time hora_alta_t, ArrayList 
 
 }
 
-public void asignarPracticaaSesion (String cod_practica, Sesion s){
+public void asignarPracticaaSesion (int cod_practica, Sesion s){
 	CatalogoPracticas cpracticas = new CatalogoPracticas();
 	Practica p = new Practica();
 	p=cpracticas.buscarPractica(cod_practica);
