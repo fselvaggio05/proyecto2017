@@ -185,7 +185,6 @@ public void confeccionarRemito (Remito remito){
 
 
 
-
 public static int getDiaDeLaSemana(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
 	cal.setTime(d);
