@@ -172,12 +172,27 @@ public void registrarSesion (ArrayList <Sesion> s){
 	}
 }
 
+public void confeccionarRemito (Remito remito){
+	CatalogoRemitos cremitos = new CatalogoRemitos();
+	cremitos.altaRemito(remito);	
+	ArrayList <DetalleRemito> dr = new ArrayList();
+	
+	java.sql.Date fecha_desde = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_desde(), -1);
+	java.sql.Date fecha_hasta = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_hasta(), 1);
+	dr=cremitos.obtenerDetalleRemito(fecha_desde,fecha_hasta);
+	
+}
+
+
+
+
 public static int getDiaDeLaSemana(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
 	cal.setTime(d);
 	return cal.get(Calendar.DAY_OF_WEEK);		
 }
 public static int getNroDia (String dia){
+	
 
 	int nro = 0;
 	switch(dia){
@@ -202,8 +217,17 @@ public static int getNroDia (String dia){
 	return nro;
 }
 
-
-
+public Date sumarRestarDiasFecha(Date fecha, int dias){
+    Calendar calendar = Calendar.getInstance();	
+    calendar.setTime(fecha); // Configuramos la fecha que se recibe
+    calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
+    java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+    
+    
+    return javaSqlDate; // Devuelve el objeto Date con los nuevos días añadidos
+	
+	
+}
 }
 
 
