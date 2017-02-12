@@ -43,12 +43,14 @@ public void reservarTurno(int dni, String motivo_turno, Turno t){
 	{
 		 //si no encuentra un paciente, se le da el alta
 		this.altaPaciente();
+		this.reservarTurno(dni, motivo_turno, t);
 	}else 
 	{
 		//se encontro el paciente y se reserva el turno
 		t.setPaciente(pacient);
 		t.setObservacion(motivo_turno);
 		cturnos.actualizarTurno(t);
+		
 	}
 	
 	
@@ -144,6 +146,7 @@ public void  asignarTurnoaPaciente (int dni, Date fecha_alta_t, Time hora_alta_t
 	t.setPaciente(p);
 	t.setEstado("Asignado");
 	cturnos.actualizarTurno(t);
+	this.confirmarTurnoPaciente(p, t);
 
 }
 	
@@ -184,6 +187,16 @@ public void confeccionarRemito (Remito remito){
 }
 
 
+public void confirmarTurnoPaciente(Paciente p, Turno t){
+	ServicioEnvioCorreo sec = new ServicioEnvioCorreo();
+	String asunto = "Confirmación turno asignado en Clínica Pasos";
+	String mensaje = "Buenos dìas" + p.getNombre() +" "+ p.getApellido() +". " +
+			         "El siguiente correo tiene por motivo la confirmación del turno asignado para el día  " +
+        			 t.getFecha_alta_t() + " a las: " + t.getHora_alta_t() + "." +
+			         "El mismo puede ser cancelado hasta 24 horas previas a la fecha. Cualquier duda o consulta "+
+        			 "comunicarse vía telefónica a o responda dicho correo. Clínica Pasos";
+sec.enviarCorreo(asunto, mensaje, p.getEmail());
+}
 
 public static int getDiaDeLaSemana(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
