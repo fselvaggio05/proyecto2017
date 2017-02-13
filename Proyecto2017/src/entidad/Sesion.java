@@ -7,6 +7,21 @@ private Date fecha_sesion;
 private int nro_sesion;
 private Practica Practica;
 private Turno Turno;
+private String estado; 
+private int idsesion;
+
+public int getIdsesion() {
+	return idsesion;
+}
+public void setIdsesion(int idsesion) {
+	this.idsesion = idsesion;
+}
+public String getEstado() {
+	return estado;
+}
+public void setEstado(String estado) {
+	this.estado = estado;
+}
 public Date getFecha_sesion() {
 	return fecha_sesion;
 }
