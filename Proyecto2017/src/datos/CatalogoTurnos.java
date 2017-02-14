@@ -185,6 +185,8 @@ public class CatalogoTurnos {
 	}
 	
 	public void registrarTurno (Turno t ){
+
+		
 		// permite el registro de un nuevo turno
 		ResultSet rs=null;
 		PreparedStatement stmt=null;

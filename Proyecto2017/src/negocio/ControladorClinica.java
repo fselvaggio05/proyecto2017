@@ -180,7 +180,7 @@ public void registrarSesionAprobada (ArrayList <Sesion> s){
 	CatalogoSesiones csesiones = new CatalogoSesiones();
 	for(int i=0; i<s.size(); i=i+1){
 		Sesion sesion = s.get(i);
-	csesiones.ActualizarSesion(sesion);
+	csesiones.actualizarSesion(sesion);
 	}
 }
 

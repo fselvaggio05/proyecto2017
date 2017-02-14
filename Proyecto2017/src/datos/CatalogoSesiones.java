@@ -56,7 +56,7 @@ public class CatalogoSesiones {
 	
 	}
 
-	public void ActualizarSesion(Sesion sesion) {
+	public void actualizarSesion(Sesion sesion) {
 		ResultSet rs=null;
 		PreparedStatement stmt=null;
 		
