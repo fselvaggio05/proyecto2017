@@ -195,8 +195,15 @@ sesiones = csesiones.buscarSesionesEstado(fecha_desde, fecha_hasta, estado);
 	
 	
 }
-
-public void confeccionarDetalleRemito (Remito remito){
+public Remito registrarRemito (int nro_remito, Date fecha_confeccion, Date fecha_desde, Date fecha_hasta){
+	Remito remito = new Remito();
+	remito.setNro_remito(nro_remito);
+	remito.setFecha_confeccion(fecha_confeccion);
+	remito.setFecha_desde(fecha_desde);
+	remito.setFecha_hasta(fecha_hasta);
+	return remito;
+}
+public ArrayList<DetalleRemito> confeccionarDetalleRemito (Remito remito){
 	CatalogoRemitos cremitos = new CatalogoRemitos();
 	cremitos.altaRemito(remito);	
 	ArrayList <DetalleRemito> dr = new ArrayList();
@@ -204,6 +211,7 @@ public void confeccionarDetalleRemito (Remito remito){
 	java.sql.Date fecha_desde = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_desde(), -1);
 	java.sql.Date fecha_hasta = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_hasta(), 1);
 	dr=cremitos.obtenerDetalleRemito(fecha_desde,fecha_hasta);
+	return dr;
 }
 
 
