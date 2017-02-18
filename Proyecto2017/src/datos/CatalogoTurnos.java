@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
+
 import entidad.*;
 
 public class CatalogoTurnos {
@@ -77,7 +78,62 @@ public class CatalogoTurnos {
 
 	public Turno seleccionarTurno(Date dia_turno, Time hora_turno) {
 		//busca el turno para ese  dia y horario y devuelve el turno con los datos completos
-		return null;
+		
+		
+		Turno turno = new Turno();
+		String sql="select fecha_alta_t, hora_alta_t, estado, fecha_baja_t, observacion, matricula, nro_afiliado_os  from turno  where fecha_alta_t= ? and hora_alta_t=?";
+		PreparedStatement sentencia=null;
+		ResultSet rs=null;
+		Connection con = FactoryConexion.getInstancia().getConn();
+		try 
+		{			
+			sentencia= con.prepareStatement(sql);
+			sentencia.setDate(1, (java.sql.Date) dia_turno );
+			sentencia.setTime(2, hora_turno);
+			rs= sentencia.executeQuery();
+			while (rs !=null && rs.next()){
+				
+				Kinesiologo k =new Kinesiologo ();
+				Paciente p = new Paciente();
+				turno.setFecha_alta_t(rs.getDate("fecha_alta_t"));
+				turno.setHora_alta_t(rs.getTime("hora_alta_t"));
+				turno.setEstado(rs.getString("estado"));
+				turno.setFecha_baja_t(rs.getDate("fecha_baja_t"));
+				turno.setObservacion(rs.getString("observacion"));
+				k.setMatricula(rs.getInt("matricula"));
+				turno.setKinesiologo(k);
+				p.setNro_afiliado_os(rs.getInt("nro_afiliado_os"));
+				turno.setPaciente(p);
+				
+				
+			}
+			
+				
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(rs!=null)
+				{
+					rs.close();
+				}
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				FactoryConexion.getInstancia().releaseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}
+		return turno;
 	}
 
 	public void actualizarTurno(Turno t) {
@@ -129,6 +185,8 @@ public class CatalogoTurnos {
 	}
 	
 	public void registrarTurno (Turno t ){
+
+		
 		// permite el registro de un nuevo turno
 		ResultSet rs=null;
 		PreparedStatement stmt=null;
@@ -163,6 +221,13 @@ public class CatalogoTurnos {
 			
 			FactoryConexion.getInstancia().releaseConn();
 		}}
+	
+
+
+
+
+	
+	
 	
 
 

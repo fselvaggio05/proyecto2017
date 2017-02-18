@@ -12,23 +12,29 @@ import entidad.*;
 
 
 public class ControladorClinica {
-CatalogoPersonas cpersonas = new CatalogoPersonas();
-CatalogoTurnos cturnos= new CatalogoTurnos();
+
+
+
 
 public ArrayList<Turno> buscarTurno (){
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	ArrayList<Turno> turnosDisponibles = new ArrayList <Turno> ();
-turnosDisponibles= cturnos.buscarTurnos("Libre");
+
+	turnosDisponibles= cturnos.buscarTurnos("Libre");
 	return turnosDisponibles;
 }
 
 public Turno seleccionarTurno( Date dia_turno, Time hora_turno){
-Turno t = cturnos.seleccionarTurno(dia_turno, hora_turno);
+	CatalogoTurnos cturnos= new CatalogoTurnos();
+	Turno t = cturnos.seleccionarTurno(dia_turno, hora_turno);
 return t;
 
 }
 
 public void reservarTurno(int dni, String motivo_turno, Turno t){
 //permite reservar un turno
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	String mensaje= "Dni no encontrado";
 	// se castea la variable para que sean del mismo tipo
 	Paciente pacient = (Paciente) cpersonas.buscarPersona(dni);
@@ -37,12 +43,14 @@ public void reservarTurno(int dni, String motivo_turno, Turno t){
 	{
 		 //si no encuentra un paciente, se le da el alta
 		this.altaPaciente();
+		this.reservarTurno(dni, motivo_turno, t);
 	}else 
 	{
 		//se encontro el paciente y se reserva el turno
 		t.setPaciente(pacient);
 		t.setObservacion(motivo_turno);
 		cturnos.actualizarTurno(t);
+		
 	}
 	
 	
@@ -53,6 +61,7 @@ public void reservarTurno(int dni, String motivo_turno, Turno t){
 
 private void altaPaciente() {
 	//necesito obtener los datos personales del paciente
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	Paciente pacient = new Paciente();
 	
 	
@@ -61,17 +70,29 @@ private void altaPaciente() {
 }
 
 private void actualizarPaciente(Paciente p){
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	cpersonas.actualizarPaciente(p);
 }
 
 private void eliminarPersona(int dni){
+	CatalogoPersonas cpersonas = new CatalogoPersonas();
 	cpersonas.eliminarPersona(dni);
+}
+
+public void altaPractica (Practica p){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	cpracticas.altaPractica(p);
+}
+
+public void bajaPactica (int codigo_practica){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	cpracticas.bajaPractica(codigo_practica);
 }
 
 public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte, Time duracion_turno) {
 	//dado un horario para un kinesiologo permite generar todos los turnos Libres 
 	// desde una fecha de generacion dada hasta el ultimo dia del horizonte de planificacion
-	
+	CatalogoTurnos cturnos= new CatalogoTurnos();
 	
 	//convierto la fecha de generacion en dia para poder compararla
 	Calendar dia_alta = Calendar.getInstance();
@@ -114,12 +135,105 @@ public void generarAgenda (Horario h, Date fecha_generacion, int dias_horizonte,
 	}
 }
 
+public void  asignarTurnoaPaciente (int dni, Date fecha_alta_t, Time hora_alta_t){
+	//asigna el paciente a un turno 
+	CatalogoTurnos cturnos = new CatalogoTurnos();
+	Turno t = new Turno();
+	t=cturnos.seleccionarTurno(fecha_alta_t, hora_alta_t);
+	Paciente p = new Paciente();
+	CatalogoPersonas cpacientes = new CatalogoPersonas();
+	p=cpacientes.buscarPaciente(dni);
+	t.setPaciente(p);
+	t.setEstado("Asignado");
+	cturnos.actualizarTurno(t);
+	this.confirmarTurnoPaciente(p, t);
+
+}
+	
+public void asignarSesionaTurno (Date fecha_alta_t, Time hora_alta_t, ArrayList <Sesion> s ){
+	CatalogoTurnos cturnos = new CatalogoTurnos();
+	Turno t = new Turno();
+	t=cturnos.seleccionarTurno(fecha_alta_t, hora_alta_t);
+    t.setSesion(s);
+
+}
+
+public void asignarPracticaaSesion (int cod_practica, Sesion s){
+	CatalogoPracticas cpracticas = new CatalogoPracticas();
+	Practica p = new Practica();
+	p=cpracticas.buscarPractica(cod_practica);
+	s.setPractica(p);
+	
+}
+
+public void registrarSesion (ArrayList <Sesion> s){
+	//registra las sesiones
+	CatalogoSesiones csesiones = new CatalogoSesiones();
+	for(int i=0; i<s.size(); i=i+1){
+		Sesion sesion = s.get(i);
+	csesiones.registrarSesion(sesion);
+	}
+}
+
+public void registrarSesionAprobada (ArrayList <Sesion> s){
+	//registra las sesiones aprobadas por la obra social
+	CatalogoSesiones csesiones = new CatalogoSesiones();
+	for(int i=0; i<s.size(); i=i+1){
+		Sesion sesion = s.get(i);
+	csesiones.actualizarSesion(sesion);
+	}
+}
+
+public ArrayList <Sesion> buscarSesionEstado(Remito remito, String estado){
+	//busca las sesiones de un remito segun un estado especificado
+	ArrayList <Sesion> sesiones = new ArrayList <Sesion>();
+	CatalogoSesiones csesiones = new CatalogoSesiones();
+	java.sql.Date fecha_desde = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_desde(), -1);
+	java.sql.Date fecha_hasta = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_hasta(), 1);
+sesiones = csesiones.buscarSesionesEstado(fecha_desde, fecha_hasta, estado);	
+	return sesiones;
+	
+	
+}
+public Remito registrarRemito (int nro_remito, Date fecha_confeccion, Date fecha_desde, Date fecha_hasta){
+	Remito remito = new Remito();
+	remito.setNro_remito(nro_remito);
+	remito.setFecha_confeccion(fecha_confeccion);
+	remito.setFecha_desde(fecha_desde);
+	remito.setFecha_hasta(fecha_hasta);
+	return remito;
+}
+public ArrayList<DetalleRemito> confeccionarDetalleRemito (Remito remito){
+	CatalogoRemitos cremitos = new CatalogoRemitos();
+	cremitos.altaRemito(remito);	
+	ArrayList <DetalleRemito> dr = new ArrayList();
+	
+	java.sql.Date fecha_desde = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_desde(), -1);
+	java.sql.Date fecha_hasta = (java.sql.Date) this.sumarRestarDiasFecha(remito.getFecha_hasta(), 1);
+	dr=cremitos.obtenerDetalleRemito(fecha_desde,fecha_hasta);
+	return dr;
+}
+
+
+public void confirmarTurnoPaciente(Paciente p, Turno t){
+	ServicioEnvioCorreo sec = new ServicioEnvioCorreo();
+	String asunto = "Confirmación turno asignado en Clínica Pasos";
+	String mensaje = "Buenos dìas" + p.getNombre() +" "+ p.getApellido() +". " +
+			         "El siguiente correo tiene por motivo la confirmación del turno asignado para el día  " +
+        			 t.getFecha_alta_t() + " a las: " + t.getHora_alta_t() + "." +
+			         "El mismo puede ser cancelado hasta 24 horas previas a la fecha. Cualquier duda o consulta "+
+        			 "comunicarse vía telefónica a o responda dicho correo. Clínica Pasos";
+sec.enviarCorreo(asunto, mensaje, p.getEmail());
+}
+
 public static int getDiaDeLaSemana(Date d){
 	GregorianCalendar cal = new GregorianCalendar();
 	cal.setTime(d);
 	return cal.get(Calendar.DAY_OF_WEEK);		
 }
 public static int getNroDia (String dia){
+	
+
 	int nro = 0;
 	switch(dia){
 	case "Domingo": nro= 1;
@@ -141,6 +255,18 @@ public static int getNroDia (String dia){
 	}
 	
 	return nro;
+}
+
+public Date sumarRestarDiasFecha(Date fecha, int dias){
+    Calendar calendar = Calendar.getInstance();	
+    calendar.setTime(fecha); // Configuramos la fecha que se recibe
+    calendar.add(Calendar.DAY_OF_YEAR, dias);  // numero de días a añadir, o restar en caso de días<0
+    java.sql.Date javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+    
+    
+    return javaSqlDate; // Devuelve el objeto Date con los nuevos días añadidos
+	
+	
 }
 }
 
