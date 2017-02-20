@@ -27,7 +27,7 @@
       <a class="nav-item nav-link" href="#">Area profesionales</a>
       
     </nav>
-    <form class="form-inline pull-xs-right">
+    <form action="LoginServlet" class="form-inline pull-xs-right" method="post" id="FormLogin">
         <input id="email" type="email" class="form-control" name="email" value="" placeholder="DNI"> 
         <input id="password" type="password" class="form-control" name="password" value="" placeholder="Clave">
         <a class="btn btn-primary" href="#"><i class="fa fa-sign-in fa-lg fa-fw"></i>Login</a>
@@ -49,6 +49,7 @@
                         </li>
                         <li>
                             <a href="#" >Administracion<span class="glyphicon pull-right"></span></a>
+                            
                         </li>
                         <li>
                             <a href="#">Contacto <span class="glyphicon pull-right"></span></a>
@@ -64,17 +65,17 @@
 </div>
 
 <!-- Formulario -->
-<form class="form-horizontal">
+<form class="form-horizontal" action="ABMPersonaServlet" method="post" id="FormABMPersona">
 <fieldset>
 
 
-<legend align="center">Alta personas</legend>
+<legend align="center">Alta paciente</legend>
 
 
 <div class="form-group">
   <label class="col-md-4 control-label" for="nombre">Nombre</label>  
   <div class="col-md-4">
-  <input id="first_name" name="txtNombre" type="text" placeholder="" class="form-control input-md">
+  <input id="nombre" name="txtNombre" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
@@ -83,7 +84,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="apellido">Apellido</label>  
   <div class="col-md-4">
-  <input id="ךשדא_משצק" name="txtApellido" type="text" placeholder="" class="form-control input-md">
+  <input id="apellido" name="txtApellido" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
@@ -99,7 +100,7 @@
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="invites_side">Tipo de documento</label>
+  <label class="col-md-4 control-label" for="tipoDoc">Tipo de documento</label>
   <div class="col-md-4">
     <select id="invites_side" name="cmbTipoDoc" class="form-control">
       <option value="1">DNI</option>
@@ -112,7 +113,15 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="dni">Numero de documento</label>  
   <div class="col-md-4">
-  <input id="city" name="txtDNI" type="text" placeholder="" class="form-control input-md">
+  <input id="dni" name="txtDNI" type="text" placeholder="" class="form-control input-md">
+    
+  </div>
+   </div>
+  
+  <div class="form-group">
+  <label class="col-md-4 control-label" for="nroAfiliado">Nro. de afiliado</label>  
+  <div class="col-md-4">
+  <input id="nroAfiliado" name="txtNroAfiliado" type="text" placeholder="" class="form-control input-md">
     
   </div>
  </div>
@@ -120,7 +129,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="fecha_nac">Fecha de nacimiento</label>  
   <div class="col-md-4">
-  <input id="city" name="txtFechaNac" type="text" placeholder="" class="form-control input-md">
+  <input id="fechaNac" name="txtFechaNac" type="text" placeholder="" class="form-control input-md">
     
   </div>
 </div>
@@ -134,8 +143,12 @@
     <input type="radio" name="radMasc" >Masculino <br>
      <input type="radio" name="radFem" >Femenino <br>
     
-    
+  
   </div>
+ <div>
+ 	<input type="submit" name="accion">Actualizar
+ </div>
+  
 </div>
 </fieldset>
 </form>
